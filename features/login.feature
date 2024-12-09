@@ -1,12 +1,12 @@
-Feature: The Internet Guinea Pig Website
 
-  Scenario Outline: As a user, I can log into the secure area
+Feature: Register and checkout on AutomationExercise
 
-    Given I am on the login page
-    When I login with <username> and <password>
-    Then I should see a flash message saying <message>
-
-    Examples:
-      | username | password             | message                        |
-      | tomsmith | SuperSecretPassword! | You logged into a secure area! |
-      | foobar   | barfoo               | Your username is invalid!      |
+  Scenario: Successful registration and product purchase
+    Given I am on the landing page
+    When I click SignIn on the landing page
+    When I create an account with email "vgr@example.com" and name "John Doe"
+    When I enter my personal details and click Register
+    Then I should see my name and surname displayed on the account page
+    When I add a product to the cart
+    When I proceed to the checkout page
+    Then I should see the correct product details on the payments page

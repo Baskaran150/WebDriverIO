@@ -1,3 +1,5 @@
+
+
 export const config: WebdriverIO.Config = {
     //
     // ====================
@@ -6,6 +8,7 @@ export const config: WebdriverIO.Config = {
     // WebdriverIO supports running e2e tests as well as unit and component tests.
     runner: 'local',
     tsConfigPath: './tsconfig.json',
+    
     
     //
     // ==================
@@ -63,7 +66,7 @@ export const config: WebdriverIO.Config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'info',
+    logLevel: 'error',
     //
     // Set specific log levels per logger
     // loggers:
@@ -75,8 +78,8 @@ export const config: WebdriverIO.Config = {
     // - @wdio/cli, @wdio/config, @wdio/utils
     // Level of logging verbosity: trace | debug | info | warn | error | silent
     // logLevels: {
-    //     webdriver: 'info',
-    //     '@wdio/appium-service': 'info'
+    //     webdriver: 'debug',
+    //     '@wdio/appium-service': 'debug'
     // },
     //
     // If you only want to run your tests until a specific amount of tests have failed use
@@ -87,7 +90,7 @@ export const config: WebdriverIO.Config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-     baseUrl: 'https://the-internet.herokuapp.com/',
+     baseUrl: 'https://automationexercise.com',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -151,7 +154,7 @@ export const config: WebdriverIO.Config = {
         // <string> (expression) only execute the features or scenarios with tags matching the expression
         tagExpression: '',
         // <number> timeout for step definitions
-        timeout: 60000,
+        timeout: 100000,
         // <boolean> Enable this config to treat undefined definitions as warnings.
         ignoreUndefinedDefinitions: false
     },
