@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "//u[normalize-space()=\"View Cart\"]"
+}

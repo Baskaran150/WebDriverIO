@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "//p[text()=\"Congratulations! Your new account has been successfully created!\"]"
+}

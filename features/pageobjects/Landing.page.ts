@@ -11,6 +11,7 @@ class LandingPage extends Page{
 
   // Actions
  public async clickSignIn() {
+    await WebElementUtils.scrollToElement(this.signInButton)
     await WebElementUtils.clickElement(this.signInButton)
   }
 

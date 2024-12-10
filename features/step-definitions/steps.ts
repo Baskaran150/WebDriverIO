@@ -8,8 +8,6 @@ import CheckoutPage from '../pageobjects/Checkout.page';
 import { getTestCaseDataByIdentifier } from '../utils/ExcelUtils';
 import {generateRandomEmail}from '../utils/Generalutils';
 
-
-
 // Step 1: Given I am on the landing page
 Given('I am on the landing page', async () => {
   await LandingPage.open();
@@ -77,8 +75,8 @@ When('I proceed to the checkout page', async () => {
 });
 
 // Step 8: Then I should see the correct product details on the payments page
-Then('I should see the correct product details on the payments page', async () => {
-  const expectedDetails = 'Product Name';  
+Then('I should see the correct product details on the payments page', async function() {
+  const expectedDetails = this.testCaseData[13];  
   await CheckoutPage.validateProductDetails(expectedDetails);
 });
 
@@ -89,4 +87,11 @@ When('I click SignIn on the landing page', async () => {
 // Step 4: Then I should enter the name and email
 When('I create an account with email and name', async function() {
   await LoginPage.createAccount(await generateRandomEmail(), this.testCaseData[1]);
+})
+
+//Step 10: Logout from the Application
+Then('I should logoff from application',async ()=>
+{
+  await LoginPage.logout();
+  await LoginPage.home();
 })

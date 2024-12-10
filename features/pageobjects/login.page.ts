@@ -34,6 +34,11 @@ class LoginPage {
     return $("//button[@data-qa='login-button']")
   }
 
+  public get logoutbtn()
+  {
+    return $("//a[@href='/logout']")
+  }
+
   public get createAccountButton() {
     return $("//button[@data-qa='create-account']");
   }
@@ -116,11 +121,17 @@ public get statefield()
     return $('//a[@data-qa="continue-button"]')
   }
 
+  public get homebtn()
+  {
+    return $('//a[@href="/"]')
+  }
+
   // Actions
   public async createAccount(email: string,name:string) {
     await WebPageUtils.waitForPageLoad();
     await WebElementUtils.setInputValue(this.signUpNameField,name);
     await WebElementUtils.setInputValue(this.signUpEmailField,email);
+    await WebElementUtils.scrollToElement(this.signUpBtn);
     await WebElementUtils.clickElement(this.signUpBtn);
   }
 
@@ -140,11 +151,22 @@ public get statefield()
     await WebElementUtils.setInputValue(this.cityField,city);
     await WebElementUtils.setInputValue(this.zipCodeField,zipCode);
     await WebElementUtils.setInputValue(this.phoneField,phone);
+    await WebElementUtils.scrollToElement(this.createAccountButton)
     await WebElementUtils.clickElement(this.createAccountButton);
     await WebPageUtils.waitForPageLoad();
     const successMessage = await WebElementUtils.getText(this.message);
     await AssertUtils.assertValue('Congratulations! Your new account has been successfully created!',successMessage);
     await WebElementUtils.clickElement(this.continuebtn);
+  }
+
+  public async logout()
+  {
+    await WebElementUtils.clickElement(this.logoutbtn)
+  }
+
+  public async home()
+  {
+    await WebElementUtils.clickElement(this.homebtn)
   }
 }
 

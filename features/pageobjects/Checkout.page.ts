@@ -5,7 +5,7 @@ import { AssertUtils } from '../utils/Assertutils';
 class CheckoutPage {
   // Selectors
   public get productDetails() {
-    return $('.product-details'); // Modify according to the website's HTML
+    return $('//h4/a'); // Modify according to the website's HTML
   }
 
   public get paymentButton() {
