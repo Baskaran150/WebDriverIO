@@ -1,4 +1,0 @@
-{
-  "using": "xpath",
-  "value": "//li[10]//a[1]"
-}

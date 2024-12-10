@@ -1,4 +1,0 @@
-{
-  "using": "xpath",
-  "value": "//input[@data-qa='signup-name']"
-}

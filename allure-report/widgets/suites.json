@@ -1,1 +1,1 @@
-{"total":2,"items":[{"uid":"d6ef2d0a81904b9d49ff06308b5f8e8a","name":"Register and checkout on AutomationExercise: Successful registration and product purchase","statistic":{"failed":0,"broken":0,"skipped":0,"passed":10,"unknown":0,"total":10}}]}
+{"total":2,"items":[{"uid":"039bf61f309962cf237dccfd123ef060","name":"Register and checkout Product: Successful registration and product purchase","statistic":{"failed":0,"broken":1,"skipped":5,"passed":5,"unknown":0,"total":11}}]}
