@@ -31,7 +31,9 @@
   },
   "dependencies": {
     "@babel/register": "^7.25.9",
+    "fs": "^0.0.1-security",
     "path": "^0.12.7",
-    "webdriverio": "^9.4.1"
+    "webdriverio": "^9.4.1",
+    "xlsx": "^0.18.5"
   }
 }

@@ -5,46 +5,65 @@ import LoginPage from '../pageobjects/login.page';
 import AccountPage from '../pageobjects/Account.page';
 import ProductPage from '../pageobjects/Product.page';
 import CheckoutPage from '../pageobjects/Checkout.page';
+import { getTestCaseDataByIdentifier } from '../utils/ExcelUtils';
+import {generateRandomEmail}from '../utils/Generalutils';
+
+
 
 // Step 1: Given I am on the landing page
 Given('I am on the landing page', async () => {
-    await LandingPage.open();
-    await LandingPage.verifylandingpage();
+  await LandingPage.open();
+  await LandingPage.verifylandingpage();
+});
+
+// Step 2: When I fetch the test case details for the identifier
+When('I fetch the test case details for {string}', async function (testCaseIdentifier: string) {
+  try {
+    // Fetch the test case data using the identifier from the feature file
+    const testCaseData = await getTestCaseDataByIdentifier('./data/TestData.xlsx', 'Sheet1', testCaseIdentifier);
     
-  
+    // Store the test case data in the scenario context (this)
+    if (testCaseData) {
+      this.testCaseData = testCaseData;
+    } else {
+      throw new Error(`Test case with identifier ${testCaseIdentifier} not found.`);
+    }
+  } catch (error) {
+    console.error('Error fetching test case details:', error);
+    throw error;
+  }
 });
 
-// Step 2: When I click SignIn
-When('I click SignIn on the landing page', async () => {
-  await LandingPage.clickSignIn();
-});
-
-// Step 3: When I create an account with email {string}
-When('I create an account with email {string} and name {string}', async (email: string,name: string) => {
-  await LoginPage.createAccount(email,name);
-});
 
 // Step 4: When I enter my personal details and click Register
-When('I enter my personal details and click Register', async () => {
-  const firstName = 'John';
-  const lastName = 'Doe';
-  const password = 'Test123';
-  const dobday= '10';
-  const dobmonth= 'January';
-  const dobyear='2021';
-  const address = '123 Main Street';
-  const state= 'TN';
-  const city = 'SampleCity';
-  const zipCode = '12345';
-  const phone = '1234567890';
+When('I enter my personal details and click Register', async function () {
+  const testCaseData = this.testCaseData;
 
-  await LoginPage.registerUser(password,dobday,dobmonth,dobyear,firstName, lastName,address,state, city, zipCode, phone);
+  if (testCaseData) {
+    const firstName = testCaseData[1];  // First Name from Excel data
+    const lastName = testCaseData[2];   // Last Name from Excel data
+    const email = await generateRandomEmail();      // Generate email from function
+    const password = testCaseData[4];   // Password from Excel data
+    const dobday = testCaseData[5];     // DOB Day from Excel data
+    const dobmonth = testCaseData[6];   // DOB Month from Excel data
+    const dobyear = testCaseData[7];    // DOB Year from Excel data
+    const address = testCaseData[8];    // Address from Excel data
+    const state = testCaseData[9];      // State from Excel data
+    const city = testCaseData[10];      // City from Excel data
+    const zipCode = testCaseData[11];   // Zip Code from Excel data
+    const phone = testCaseData[12];     // Phone from Excel data
+
+    // Now register the user with the extracted values
+    await LoginPage.registerUser(password, dobday, dobmonth, dobyear, firstName, lastName, address, state, city, zipCode, phone);
+  } else {
+    throw new Error('Test case data not found.');
+  }
 });
 
 // Step 5: Then I should see my name and surname displayed on the account page
-Then('I should see my name and surname displayed on the account page', async () => {
+Then('I should see my name and surname displayed on the account page', async function() {
   const userName = await AccountPage.getUserName();
-  expect(userName).to.include('John Doe'); // Check for first and last name
+  expect(userName).to.include(this.testCaseData[1]);  // Check for first and last name
 });
 
 // Step 6: When I add a product to the cart
@@ -59,7 +78,15 @@ When('I proceed to the checkout page', async () => {
 
 // Step 8: Then I should see the correct product details on the payments page
 Then('I should see the correct product details on the payments page', async () => {
-  const expectedDetails = 'Product Name'; // Replace with the actual product details
+  const expectedDetails = 'Product Name';  
   await CheckoutPage.validateProductDetails(expectedDetails);
 });
 
+//Step 3: Then I should click the signin link
+When('I click SignIn on the landing page', async () => {
+  await LandingPage.clickSignIn();
+})
+// Step 4: Then I should enter the name and email
+When('I create an account with email and name', async function() {
+  await LoginPage.createAccount(await generateRandomEmail(), this.testCaseData[1]);
+})
