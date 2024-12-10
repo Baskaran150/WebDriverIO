@@ -8,10 +8,29 @@ export const config: WebdriverIO.Config = {
     ],
     exclude: [],
 
-    maxInstances: 10,
-    capabilities: [{
-        browserName: 'microsoftedge'  // You can change to 'chrome', 'firefox', etc.
-    }],
+    maxInstances: 1,
+    
+    capabilities: [
+        {
+            browserName: process.env.BROWSER || 'chrome', // Default to 'chrome' if no environment variable is set
+
+            // Browser options for Chrome
+            'goog:chromeOptions': process.env.BROWSER === 'chrome' ? {
+                args: ['--disable-gpu', '--no-sandbox'] // Example: Chrome headless mode
+            } : undefined,
+
+            // Browser options for Firefox
+            'moz:firefoxOptions': process.env.BROWSER === 'firefox' ? {
+                args: ['-headless'] // Firefox in headless mode
+            } : undefined,
+
+            // Browser options for Edge
+            'ms:edgeOptions': (process.env.BROWSER === 'edge' || process.env.BROWSER === 'microsoftedge') ? {
+                args: ['--disable-gpu', '--no-sandbox'] // Edge headless mode
+            } : undefined,
+        }
+    ],
+      
 
     logLevel: 'info',  // Set log level to 'info' for general test information
 
@@ -29,7 +48,8 @@ export const config: WebdriverIO.Config = {
 
     framework: 'cucumber',
 
-    reporters: [['allure', { outputDir: 'allure-results' }]],
+    reporters: [['allure', { outputDir: 'allure-results',disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false}]],
 
     cucumberOpts: {
         require: ['./features/step-definitions/steps.ts'],
@@ -85,5 +105,6 @@ export const config: WebdriverIO.Config = {
         } else {
             console.log(`All tests passed successfully!`);
         }
-    },
+    }
+      
 };
